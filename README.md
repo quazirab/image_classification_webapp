@@ -17,5 +17,5 @@ Utilized:
 ![pipeline](snapshot/pipeline1.PNG?raw=true "Heroku Pipeline")
 
 ### Flow Chart
-![Flow Chart](snapshot/flow_chart.PNG?raw=true "Request Flow Chart")
+![Flow Chart](snapshot/flow_chart.png?raw=true "Request Flow Chart")
 
