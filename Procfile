@@ -1,0 +1,1 @@
+web: gunicorn run_server:server --log-file - --log-level debug
