@@ -14,4 +14,4 @@ Utilized:
 ![snapshot1](snapshot/snap1.gif?raw=true "Snapshot 1")
 
 ### Pipeline
-![pipeline](snapshot/pipeline1.png?raw=true "Heroku Pipeline")
+![pipeline](snapshot/pipeline1.PNG?raw=true "Heroku Pipeline")
