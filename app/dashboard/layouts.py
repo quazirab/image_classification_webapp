@@ -6,49 +6,54 @@ def load_layout(app):
     app.layout = html.Div([
         html.Div(  # header
             [
-            html.Div(
-                [
-                    html.H2('Image Classification'),
-                    # html.A(html.H4('API Example'), href='/api/v1/history?ticker=MMM', target="_blank"),
-                ],
+                html.Div(
+                    [
+                        html.H2('Image Classification'),
+                        # html.A(html.H4('API Example'), href='/api/v1/history?ticker=MMM', target="_blank"),
+                    ],
 
-                className='eight columns'
-            ),
-
-            html.Div(
-
-                className='two columns'
-            ),
-
-            
-            html.A([
-                html.Img(
-                    src="https://github.githubassets.com/images/modules/logos_page/Octocat.png",
-                    style={'height':'100%', 'width':'50%','float': 'right'},                    
+                    className='eight columns'
                 ),
-            ],
-            href = "https://github.com/quazirab/image_classification_webapp",
-            className='two columns',
-            target="_blank",
-            ),
-            
+
+                html.Div(
+
+                    className='two columns'
+                ),
+
+
+                html.A([
+                  
+                        html.Img(
+                        src="https://github.githubassets.com/images/modules/logos_page/Octocat.png",
+                        style={'height': '100%',
+                               'width': '50%', 'float': 'right'},
+                        title='Github Repo',
+                        )
+                
+                    
+                ],
+                    href="https://github.com/quazirab/image_classification_webapp",
+                    className='two columns',
+                    target="_blank",
+                ),
+
             ],
             id="header",
             className='row',
         ),
 
         html.Div(
-            [   
+            [
                 html.Div(
                     [
                         html.Div(
-                            [   
+                            [
                                 dcc.Upload(
                                     id='upload-data',
                                     children=html.Div([
                                         'Drag and Drop or ',
                                         html.A('Select Files.'),
-                                        ' Only .png and .jgp file will be processed'
+                                        ' Only .png and .jgp file'
                                     ]),
                                     style={
                                         'width': '100%',
@@ -83,10 +88,13 @@ def load_layout(app):
             className="row"
         ),
 
-        
-        html.Div(
-            id="row2",
-            className="row"
+        dcc.Loading(
+            id="loading-2",
+            type="default",
+            children=html.Div(
+                id="row2",
+                className="row"
+            ),
         ),
 
         html.Div(
@@ -95,7 +103,7 @@ def load_layout(app):
         ),
 
 
-        
+
 
     ],
         id="mainContainer",
