@@ -53,7 +53,7 @@ def load_layout(app):
                                     children=html.Div([
                                         'Drag and Drop or ',
                                         html.A('Select Files.'),
-                                        ' Only .png and .jgp file'
+                                        ' Max Size 1MB'
                                     ]),
                                     style={
                                         'width': '100%',
@@ -67,6 +67,7 @@ def load_layout(app):
                                     },
                                     # Allow multiple files to be uploaded
                                     multiple=False,
+                                    max_size=1000000,
                                 ),
                                 dcc.Loading(
                                     id="loading-1",

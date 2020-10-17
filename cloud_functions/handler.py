@@ -22,10 +22,10 @@ def handler(request):
 
     request_json = request.get_json()
 
-    if request_json and 'image' in request_json:
-
-        if model is None:
+    if model is None:
             model = tf.keras.applications.inception_v3.InceptionV3()
+            
+    if request_json and 'image' in request_json:
             
         try:
             image = np.array(request_json['image'])

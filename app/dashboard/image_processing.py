@@ -7,11 +7,13 @@ import dash_html_components as html
 import plotly.graph_objects as go
 import dash_core_components as dcc
 import os
+from time import time
 
 # Variables
 HTML_IMG_SRC_PARAMETERS = 'data:image/png;base64, '
 target_size=(224, 224)
 url = os.environ["IMG_CLASS_URL"]
+last_runtime_file = 'last_runtime.txt'
 
 # Some functions taken from https://github.com/plotly/dash-image-processing/blob/master/dash_reusable_components.py
 
@@ -63,7 +65,6 @@ data = {'prediction': [['Siamese_cat', 94.88406181335449], ['Egyptian_cat', 3.60
 def barChart(prediction):
     x = []
     y = []
-    print(prediction)
     for name,confidence in prediction:
         x.append(name)
         y.append(round(confidence,2))
@@ -90,6 +91,20 @@ def barChart(prediction):
                     id='graph',
                     figure = fig
             )
-    
 
-    
+def model_wakeup():
+    '''
+    Very bad idea to store in txt file which can cause error in cocurrent request, but for small project: fingers X
+    '''
+    with open(last_runtime_file,'r') as handler:
+        try:
+            last_open_time = float(handler.readline())
+            if time() - last_open_time > 20*60:
+                requests.post(url)
+        except:
+            requests.post(url)
+    try:
+        with open(last_runtime_file,'w') as handler: 
+            handler.write(str(time()))
+    except:
+        pass

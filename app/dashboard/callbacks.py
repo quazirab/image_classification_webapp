@@ -6,7 +6,7 @@ import dash_html_components as html
 import dash_core_components as dcc
 import plotly.graph_objs as go
 
-from app.dashboard.image_processing import b64_to_pil, img_to_list, prediction, DisplayImagePIL, barChart
+from app.dashboard.image_processing import b64_to_pil, img_to_list, prediction, DisplayImagePIL, barChart, model_wakeup
 
 approved_file_extenstions = ['.jpg', 'jpeg', '.png']
 
@@ -17,26 +17,33 @@ def load_callbacks(app):
               [Input('upload-data', 'contents')],
               [State('upload-data', 'filename')])
     def update_output(content, filename):
+        
+        model_wakeup()
+
         data = {}
         if filename:
             app.logger.debug(f'{filename}')
-            if any(approved_file_extenstion in filename for approved_file_extenstion in approved_file_extenstions):
+            if any(approved_file_extenstion in filename.lower() for approved_file_extenstion in approved_file_extenstions):
                 app.logger.debug(f'{filename} processing')
                 
-                string = content.split(';base64,')[-1]
+                try:
+                    string = content.split(';base64,')[-1]
 
-                img = b64_to_pil(string)
-                img_list = img_to_list(img)
-                app.logger.debug(f'{filename} requesting prediction')
-                predictions = prediction(img_list)
-                app.logger.debug(f'{filename} prediction recieved - {prediction}')
-                
-                data.update(predictions)
-                data['image'] = string
-                app.logger.debug(f'{filename} processing finished.')
-                return data
+                    img = b64_to_pil(string)
+                    img_list = img_to_list(img)
+                    app.logger.debug(f'{filename} requesting prediction')
+                    predictions = prediction(img_list)
+                    app.logger.debug(f'{filename} prediction recieved - {prediction}')
+                    
+                    data.update(predictions)
+                    data['image'] = string
+                    app.logger.debug(f'{filename} processing finished.')
+                    return data
+                except:
+                    data['error'] = f"File Processing Error, Please try with different Image"
+                    return data
             else:
-                data['error'] = f"{filename} file not supported."
+                data['error'] = f"{filename} file not supported. Only PNG and JPG file supported"
                 return data
 
     @app.callback(Output('row2', 'children'),
