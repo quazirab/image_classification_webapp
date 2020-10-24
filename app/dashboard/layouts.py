@@ -47,8 +47,12 @@ def load_layout(app):
                 html.Div(
                     [
                         html.Div(
-                            [
-                                dcc.Upload(
+                        [
+                                dcc.Loading(
+                                    id="loading-1",
+                                    type="default",
+                                    children=[
+                                        dcc.Upload(
                                     id='upload-data',
                                     children=html.Div([
                                         'Drag and Drop or ',
@@ -69,14 +73,13 @@ def load_layout(app):
                                     multiple=False,
                                     max_size=1000000,
                                 ),
-                                dcc.Loading(
-                                    id="loading-1",
-                                    type="default",
-                                    children=dcc.Store(
-                                        id='aggregate_data'),
+                                        dcc.Store(
+                                        id='aggregate_data')
+                                        
+                                        ],
                                 ),
                             ],
-                            id="dropdown_Container",
+                            id="upload_Container",
                             className="pretty_container"
                         ),
                     ],
