@@ -1,11 +1,14 @@
-# from market_data import market_data
-
-# md = market_data("AAPL")
-
-# print(md.df.index.date)
+import os
 
 from app import create_server
+
 server = create_server()
 
-if __name__ == '__main__':
-    server.run(debug=True,host='0.0.0.0')
+DEBUG = os.environ.get("DEBUG", "TRUE")
+DEBUG = True if DEBUG.upper == "TRUE" else False
+
+HOST_URL = os.environ.get("HOST_URL", "0.0.0.0")
+HOST_PORT = int(os.environ.get("HOST_PORT", 5000))
+
+if __name__ == "__main__":
+    server.run(debug=DEBUG, host=HOST_URL, port=HOST_PORT)
